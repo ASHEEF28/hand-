@@ -1,0 +1,232 @@
+{
+    "camera": {
+        "device_id": 0,
+        "width": 640,
+        "height": 480,
+        "fps": 30,
+        "buffer_size": 2,
+        "auto_exposure": true,
+        "exposure": -6,
+        "brightness": 0,
+        "contrast": 0,
+        "saturation": 64
+    },
+    "tracking": {
+        "max_hands": 2,
+        "min_detection_confidence": 0.7,
+        "min_tracking_confidence": 0.5,
+        "model_complexity": 1,
+        "smooth_landmarks": true,
+        "smoothing_factor": 0.5,
+        "min_presence_confidence": 0.5
+    },
+    "cursor": {
+        "enabled": true,
+        "sensitivity": 1.5,
+        "smoothing": 0.3,
+        "interpolation": "cubic",
+        "edge_margin": 0.0,
+        "dead_zone": 0.02,
+        "movement_region": {
+            "x_min": 0.0,
+            "y_min": 0.0,
+            "x_max": 1.0,
+            "y_max": 1.0
+        },
+        "multi_monitor": true,
+        "edge_protection": false,
+        "acceleration": 1.2,
+        "max_speed": 3000
+    },
+    "gestures": {
+        "pinch_threshold": 0.06,
+        "double_pinch_threshold": 0.3,
+        "hold_threshold": 0.5,
+        "swipe_threshold": 0.15,
+        "swipe_velocity_threshold": 500,
+        "swipe_cooldown": 0.5,
+        "pinch_cooldown": 0.3,
+        "hold_cooldown": 0.2,
+        "pinch_hold_threshold": 0.5,
+        "swipe_min_distance": 0.15,
+        "swipe_max_time": 0.5,
+        "rotation_threshold": 15.0,
+        "pinch_distance_threshold": 0.04,
+        "two_hand_distance_threshold": 0.1,
+        "zoom_sensitivity": 1.0,
+        "rotation_sensitivity": 1.0,
+        "gesture_cooldown": 0.3,
+        "hold_duration": 0.5,
+        "double_click_interval": 0.3,
+        "swipe_min_velocity": 500,
+        "pinch_max_distance": 0.05
+    },
+    "cursor_mode": {
+        "finger": "index",
+        "smoothing_factor": 0.3,
+        "sensitivity": 1.5,
+        "acceleration": 1.2,
+        "dead_zone": 0.02,
+        "edge_margin": 0.0,
+        "interpolation": "cubic",
+        "multi_monitor": true,
+        "edge_protection": false,
+        "movement_region": {
+            "x_min": 0.0,
+            "y_min": 0.0,
+            "x_max": 1.0,
+            "y_max": 1.0
+        }
+    },
+    "profiles": {
+        "current": "default",
+        "profiles": {
+            "default": {
+                "name": "Default",
+                "description": "Default gesture mappings",
+                "gestures": {}
+            },
+            "gaming": {
+                "name": "Gaming",
+                "description": "Gaming optimized gestures",
+                "gestures": {}
+            },
+            "coding": {
+                "name": "Coding",
+                "description": "Developer optimized gestures",
+                "gestures": {}
+            },
+            "design": {
+                "name": "Design",
+                "description": "Design optimized gestures",
+                "gestures": {}
+            },
+            "presentation": {
+                "name": "Presentation",
+                "description": "Presentation optimized gestures",
+                "gestures": {}
+            }
+        }
+    },
+    "ui": {
+        "theme": "dark",
+        "show_landmarks": true,
+        "show_fps": true,
+        "show_mode": true,
+        "show_gesture": true,
+        "show_camera_status": true,
+        "show_profile": true,
+        "window_width": 1280,
+        "window_height": 720,
+        "camera_feed_width": 640,
+        "camera_feed_height": 360
+    },
+    "pen": {
+        "enabled": true,
+        "mode": "absolute",
+        "sensitivity": 1.5,
+        "smoothing": 0.3,
+        "pressure_sensitivity": 1.0,
+        "double_click_distance": 5,
+        "double_click_interval": 0.3,
+        "tap_to_click": true,
+        "barrel_as_right_click": true,
+        "pen_only_mode": false,
+        "show_pen_cursor": true
+    },
+    "calibration": {
+        "cursor_sensitivity": 1.5,
+        "smoothing": 0.3,
+        "pinch_threshold": 0.04,
+        "swipe_threshold": 0.15,
+        "calibrated": false
+    },
+    "advanced": {
+        "log_level": "INFO",
+        "log_file": "gestureos.log",
+        "max_log_size": 10485760,
+        "log_backup_count": 5,
+        "performance_mode": false,
+        "low_latency_mode": true,
+        "cpu_affinity": [],
+        "priority": "high",
+        "auto_save_settings": true,
+        "check_updates": true,
+        "telemetry": false
+    },
+    "voice": {
+        "enabled": false,
+        "model_size": "tiny.en",
+        "device": "cpu",
+        "compute_type": "int8",
+        "language": "en",
+        "command_cooldown": 1.0,
+        "listen_timeout": 3.0
+    },
+    "network": {
+        "enabled": false,
+        "host": "0.0.0.0",
+        "port": 8765,
+        "heartbeat_interval": 5.0
+    },
+    "obs": {
+        "enabled": false,
+        "host": "localhost",
+        "port": 4455,
+        "password": "",
+        "reconnect_interval": 5.0
+    },
+    "gaze": {
+        "enabled": false,
+        "smoothing": 0.5,
+        "min_detection_confidence": 0.5,
+        "gaze_actions": {
+            "left": "swipe_left",
+            "right": "swipe_right",
+            "up": "volume_up",
+            "down": "volume_down"
+        }
+    },
+    "background_subtraction": {
+        "enabled": false,
+        "method": "mog2",
+        "history": 500,
+        "var_threshold": 16,
+        "detect_shadows": true,
+        "learning_rate": 0.01
+    },
+    "gesture_classifier": {
+        "enabled": false,
+        "model_path": "models/gesture_classifier.pkl",
+        "confidence_threshold": 0.6,
+        "feature_version": 1
+    },
+    "gesture_learner": {
+        "enabled": true,
+        "match_threshold": 0.8,
+        "history_frames": 15
+    },
+    "gesture_history": {
+        "enabled": true,
+        "max_size": 50
+    },
+    "anomaly_detection": {
+        "enabled": true,
+        "z_score_threshold": 3.0,
+        "window_size": 100
+    },
+    "analytics": {
+        "enabled": true,
+        "save_interval": 10,
+        "track_accuracy": true
+    },
+    "onboarding": {
+        "completed": true,
+        "show_on_startup": true
+    },
+    "ar_overlay": {
+        "enabled": false,
+        "menu_radius": 80,
+        "opacity": 0.7
+    }
+}
