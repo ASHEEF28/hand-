@@ -9,7 +9,13 @@
         "exposure": -6,
         "brightness": 0,
         "contrast": 0,
-        "saturation": 64
+        "saturation": 64,
+        "fourcc": "",
+        "backend": "any",
+        "simulate": false,
+        "simulate_on_failure": true,
+        "simulate_fps": 30,
+        "read_timeout": 1.0
     },
     "tracking": {
         "max_hands": 2,
@@ -18,7 +24,10 @@
         "model_complexity": 1,
         "smooth_landmarks": true,
         "smoothing_factor": 0.5,
-        "min_presence_confidence": 0.5
+        "min_presence_confidence": 0.5,
+        "flip_horizontal": true,
+        "backend": "auto",
+        "model_path": "models/hand_landmarker.task"
     },
     "cursor": {
         "enabled": true,
@@ -59,7 +68,21 @@
         "hold_duration": 0.5,
         "double_click_interval": 0.3,
         "swipe_min_velocity": 500,
-        "pinch_max_distance": 0.05
+        "pinch_max_distance": 0.05,
+        "pinch_ratio_threshold": 0.34,
+        "use_absolute_pinch": false,
+        "pinch_release_ratio": 0.45,
+        "middle_pinch_ratio_threshold": 0.34,
+        "pose_cooldown": 0.6,
+        "finger_curl_margin": 1.05,
+        "swipe_direction_ratio": 1.6,
+        "reference_frame_width": 1280,
+        "two_hand_delta_threshold": 0.035,
+        "two_hand_cooldown": 0.25,
+        "rotation_cooldown": 0.4,
+        "min_hand_confidence": 0.5,
+        "trail_length": 24,
+        "action_map": {}
     },
     "cursor_mode": {
         "finger": "index",
@@ -78,8 +101,148 @@
             "y_max": 1.0
         }
     },
+    "scroll": {
+        "enabled": true,
+        "sensitivity": 1.0,
+        "pixels_per_click": 0.02,
+        "dead_zone": 0.004,
+        "direction": "natural",
+        "horizontal": true,
+        "horizontal_pixels_per_click": 0.03,
+        "max_clicks_per_frame": 6,
+        "cooldown": 0.016,
+        "axis_lock_ratio": 1.5,
+        "idle_reset": 1.0
+    },
+    "media": {
+        "enabled": true,
+        "use_pycaw": true,
+        "volume_step": 5,
+        "volume_key_step": 2,
+        "action_cooldown": 0.25,
+        "max_volume": 100
+    },
+    "brightness": {
+        "enabled": true,
+        "use_screen_brightness_control": true,
+        "step": 5,
+        "min_pinch_distance": 0.02,
+        "max_pinch_distance": 0.22,
+        "smoothing": 0.5,
+        "update_cooldown": 0.15,
+        "hotkey_fallback": true
+    },
+    "zoom": {
+        "enabled": true,
+        "min_distance": 0.08,
+        "max_distance": 0.9,
+        "step_threshold": 0.03,
+        "sensitivity": 1.0,
+        "smoothing": 0.4,
+        "cooldown": 0.15,
+        "max_steps_per_event": 4
+    },
+    "rotation": {
+        "enabled": true,
+        "rotation_threshold": 15.0,
+        "sensitivity": 1.0,
+        "cooldown": 0.4,
+        "smoothing": 0.35,
+        "reset_on_idle": 0.8
+    },
+    "window": {
+        "enabled": true,
+        "use_win32": true,
+        "snap_offset": 40,
+        "move_step": 60,
+        "resize_step": 80,
+        "action_cooldown": 0.35,
+        "confirm_close": false
+    },
+    "navigation": {
+        "enabled": true,
+        "action_cooldown": 0.5,
+        "start_menu_key": "win",
+        "task_view_hotkey": [
+            "win",
+            "tab"
+        ],
+        "show_desktop_hotkey": [
+            "win",
+            "d"
+        ],
+        "explorer_hotkey": [
+            "win",
+            "e"
+        ],
+        "search_hotkey": [
+            "win",
+            "s"
+        ],
+        "settings_hotkey": [
+            "win",
+            "i"
+        ],
+        "lock_hotkey": [
+            "win",
+            "l"
+        ],
+        "desktop_left_hotkey": [
+            "win",
+            "ctrl",
+            "left"
+        ],
+        "desktop_right_hotkey": [
+            "win",
+            "ctrl",
+            "right"
+        ],
+        "new_desktop_hotkey": [
+            "win",
+            "ctrl",
+            "d"
+        ],
+        "close_desktop_hotkey": [
+            "win",
+            "ctrl",
+            "f4"
+        ],
+        "alt_tab_hotkey": [
+            "alt",
+            "tab"
+        ],
+        "alt_shift_tab_hotkey": [
+            "alt",
+            "shift",
+            "tab"
+        ]
+    },
+    "window_manager": {
+        "enabled": true,
+        "snap_enabled": true,
+        "snap_edge_threshold": 0.05,
+        "snap_corner_threshold": 0.12,
+        "grab_button_fallback": "left",
+        "min_drag_distance": 4,
+        "move_smoothing": 0.35,
+        "history_size": 20,
+        "action_cooldown": 0.4
+    },
+    "macros": {
+        "store_path": "macros/macros.json",
+        "cooldown": 0.3,
+        "allow_shell": false,
+        "async": true,
+        "max_runtime": 30.0
+    },
+    "apps": {
+        "store_path": "macros/apps.json",
+        "search_start_menu": true,
+        "cooldown": 1.0
+    },
     "profiles": {
-        "current": "default",
+        "current": "Default",
+        "auto_switch": true,
         "profiles": {
             "default": {
                 "name": "Default",
@@ -119,7 +282,31 @@
         "window_width": 1280,
         "window_height": 720,
         "camera_feed_width": 640,
-        "camera_feed_height": 360
+        "camera_feed_height": 360,
+        "refresh_fps": 30,
+        "log_lines": 500
+    },
+    "operation_mode": {
+        "mode": "hand",
+        "show_on_startup": true
+    },
+    "pen_tracker": {
+        "mode": "color",
+        "target_color": "red",
+        "max_pens": 1,
+        "min_detection_confidence": 0.5,
+        "smooth_landmarks": true,
+        "smoothing_factor": 0.6
+    },
+    "pen_recognizer": {
+        "pen_gestures": {
+            "tap_threshold": 0.02,
+            "double_tap_interval": 0.3,
+            "hold_threshold": 0.5,
+            "swipe_threshold": 0.1,
+            "swipe_velocity_threshold": 800,
+            "swipe_max_time": 0.5
+        }
     },
     "pen": {
         "enabled": true,
@@ -137,7 +324,7 @@
     "calibration": {
         "cursor_sensitivity": 1.5,
         "smoothing": 0.3,
-        "pinch_threshold": 0.04,
+        "pinch_threshold": 0.06,
         "swipe_threshold": 0.15,
         "calibrated": false
     },

@@ -1,21 +1,46 @@
+# GestureOS - core dependencies
+#
+# Install with:  pip install -r requirements.txt
+# Python 3.9 - 3.12 (3.11 recommended). Windows 10/11 for the full feature set;
+# the core gesture pipeline also runs on Linux/macOS (see the markers below).
+
+# --- Vision ---------------------------------------------------------------
+# MediaPipe 1.0 removed the legacy `mp.solutions.hands` API that GestureOS uses
+# by default. The <1.0 pin keeps the bundled hand model; vision/hand_tracker.py
+# also supports the 1.x Tasks API if you download hand_landmarker.task.
+mediapipe>=0.10.14,<1.0
 opencv-python>=4.8.0
-mediapipe>=0.10.0
 numpy>=1.24.0
+
+# --- Input / automation ---------------------------------------------------
 pyautogui>=0.9.54
 pynput>=1.7.6
 keyboard>=0.13.5
-pywin32>=306
-screeninfo>=0.8.1
+
+# --- UI -------------------------------------------------------------------
 PySide6>=6.5.0
-pyyaml>=6.0
-psutil>=5.9.0
-pycaw>=20181203
-comtypes>=1.2.0
-screen-brightness-control>=0.4.0
-scikit-learn>=1.2.0
-joblib>=1.2.0
+
+# --- Windows-only integrations --------------------------------------------
+pywin32>=306; sys_platform == 'win32'
+pycaw>=20181203; sys_platform == 'win32'
+comtypes>=1.2.0; sys_platform == 'win32'
+screen-brightness-control>=0.4.0; sys_platform == 'win32' or sys_platform == 'linux'
+screeninfo>=0.8.1; sys_platform == 'win32' or sys_platform == 'linux'
+
+# --- Optional features ----------------------------------------------------
+# Voice control ("volume up", "open notepad", ...)
 faster-whisper>=1.0.0
 sounddevice>=0.4.6
 soundfile>=0.12.1
+# Remote control server (phone / web dashboard)
 websockets>=12.0
+# OBS Studio scene switching
 obsws-python>=1.3.0
+# ML gesture classifier (gestures/classifier.py)
+scikit-learn>=1.2.0
+joblib>=1.2.0
+# Misc
+pyyaml>=6.0
+psutil>=5.9.0
+
+# Developer/test dependencies live in requirements-dev.txt

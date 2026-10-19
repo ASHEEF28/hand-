@@ -1,8 +1,9 @@
 """Configuration management for GestureOS."""
+import copy
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,13 @@ DEFAULT_CONFIG = {
         "exposure": -6,
         "brightness": 0,
         "contrast": 0,
-        "saturation": 0
+        "saturation": 0,
+        "fourcc": "",
+        "backend": "any",
+        "simulate": False,
+        "simulate_on_failure": True,
+        "simulate_fps": 30,
+        "read_timeout": 1.0
     },
     "tracking": {
         "max_hands": 2,
@@ -26,7 +33,10 @@ DEFAULT_CONFIG = {
         "model_complexity": 1,
         "smooth_landmarks": True,
         "smoothing_factor": 0.5,
-        "min_presence_confidence": 0.5
+        "min_presence_confidence": 0.5,
+        "flip_horizontal": True,
+        "backend": "auto",
+        "model_path": "models/hand_landmarker.task"
     },
     "cursor": {
         "enabled": True,
@@ -65,9 +75,23 @@ DEFAULT_CONFIG = {
         "rotation_sensitivity": 1.0,
         "gesture_cooldown": 0.3,
         "hold_duration": 0.5,
-        "double_click_interval": 0.3,
+        "double_click_interval": 0.35,
         "swipe_min_velocity": 500,
-        "pinch_max_distance": 0.05
+        "pinch_max_distance": 0.05,
+        "pinch_ratio_threshold": 0.34,
+        "use_absolute_pinch": False,
+        "pinch_release_ratio": 0.45,
+        "middle_pinch_ratio_threshold": 0.34,
+        "pose_cooldown": 0.6,
+        "finger_curl_margin": 1.05,
+        "swipe_direction_ratio": 1.6,
+        "reference_frame_width": 1280,
+        "two_hand_delta_threshold": 0.035,
+        "two_hand_cooldown": 0.25,
+        "rotation_cooldown": 0.4,
+        "min_hand_confidence": 0.5,
+        "trail_length": 24,
+        "action_map": {}
     },
     "cursor_mode": {
         "finger": "index",
@@ -86,8 +110,107 @@ DEFAULT_CONFIG = {
             "y_max": 0.9
         }
     },
+    "scroll": {
+        "enabled": True,
+        "sensitivity": 1.0,
+        "pixels_per_click": 0.02,
+        "dead_zone": 0.004,
+        "direction": "natural",
+        "horizontal": True,
+        "horizontal_pixels_per_click": 0.03,
+        "max_clicks_per_frame": 6,
+        "cooldown": 0.016,
+        "axis_lock_ratio": 1.5,
+        "idle_reset": 1.0
+    },
+    "media": {
+        "enabled": True,
+        "use_pycaw": True,
+        "volume_step": 5,
+        "volume_key_step": 2,
+        "action_cooldown": 0.25,
+        "max_volume": 100
+    },
+    "brightness": {
+        "enabled": True,
+        "use_screen_brightness_control": True,
+        "step": 5,
+        "min_pinch_distance": 0.02,
+        "max_pinch_distance": 0.22,
+        "smoothing": 0.5,
+        "update_cooldown": 0.15,
+        "hotkey_fallback": True
+    },
+    "zoom": {
+        "enabled": True,
+        "min_distance": 0.08,
+        "max_distance": 0.9,
+        "step_threshold": 0.03,
+        "sensitivity": 1.0,
+        "smoothing": 0.4,
+        "cooldown": 0.15,
+        "max_steps_per_event": 4
+    },
+    "rotation": {
+        "enabled": True,
+        "rotation_threshold": 15.0,
+        "sensitivity": 1.0,
+        "cooldown": 0.4,
+        "smoothing": 0.35,
+        "reset_on_idle": 0.8
+    },
+    "window": {
+        "enabled": True,
+        "use_win32": True,
+        "snap_offset": 40,
+        "move_step": 60,
+        "resize_step": 80,
+        "action_cooldown": 0.35,
+        "confirm_close": False
+    },
+    "navigation": {
+        "enabled": True,
+        "action_cooldown": 0.5,
+        "start_menu_key": "win",
+        "task_view_hotkey": ["win", "tab"],
+        "show_desktop_hotkey": ["win", "d"],
+        "explorer_hotkey": ["win", "e"],
+        "search_hotkey": ["win", "s"],
+        "settings_hotkey": ["win", "i"],
+        "lock_hotkey": ["win", "l"],
+        "desktop_left_hotkey": ["win", "ctrl", "left"],
+        "desktop_right_hotkey": ["win", "ctrl", "right"],
+        "new_desktop_hotkey": ["win", "ctrl", "d"],
+        "close_desktop_hotkey": ["win", "ctrl", "f4"],
+        "alt_tab_hotkey": ["alt", "tab"],
+        "alt_shift_tab_hotkey": ["alt", "shift", "tab"]
+    },
+    "window_manager": {
+        "enabled": True,
+        "snap_enabled": True,
+        "snap_edge_threshold": 0.05,
+        "snap_corner_threshold": 0.12,
+        "grab_button_fallback": "left",
+        "min_drag_distance": 4,
+        "move_smoothing": 0.35,
+        "history_size": 20,
+        "action_cooldown": 0.4
+    },
+    "macros": {
+        "store_path": "macros/macros.json",
+        "cooldown": 0.3,
+        "allow_shell": False,
+        "async": True,
+        "max_runtime": 30.0
+    },
+    "apps": {
+        "store_path": "macros/apps.json",
+        "search_start_menu": True,
+        "cooldown": 1.0
+    },
     "profiles": {
         "current": "default",
+        "auto_switch": True,
         "profiles": {
             "default": {
                 "name": "Default",
@@ -127,7 +250,9 @@ DEFAULT_CONFIG = {
         "window_width": 1280,
         "window_height": 720,
         "camera_feed_width": 640,
-        "camera_feed_height": 360
+        "camera_feed_height": 360,
+        "refresh_fps": 30,
+        "log_lines": 500
     },
     "operation_mode": {
         "mode": "hand",
@@ -264,7 +389,9 @@ DEFAULT_CONFIG = {
 class ConfigManager:
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = Path(config_path) if config_path else Path(__file__).parent / "settings.json"
-        self.config = DEFAULT_CONFIG.copy()
+        # Deep copy: a shallow one would let _merge_config write straight into
+        # the module level DEFAULT_CONFIG and leak values between instances.
+        self.config = copy.deepcopy(DEFAULT_CONFIG)
         self._load_config()
     
     def _load_config(self):
@@ -279,7 +406,7 @@ class ConfigManager:
                 logger.info(f"Created default config at {self.config_path}")
         except Exception as e:
             logger.error(f"Error loading config: {e}")
-            self.config = DEFAULT_CONFIG.copy()
+            self.config = copy.deepcopy(DEFAULT_CONFIG)
     
     def _merge_config(self, base: dict, override: dict):
         for key, value in override.items():
@@ -332,7 +459,7 @@ class ConfigManager:
         self._save_config()
     
     def reset_to_defaults(self):
-        self.config = DEFAULT_CONFIG.copy()
+        self.config = copy.deepcopy(DEFAULT_CONFIG)
         self._save_config()
 
 _config_instance = None

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Test / tooling caches
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# GestureOS runtime state
+logs/
+*.log
+gestureos.log*
+# NOTE: keep these file-specific - `analytics/` and `macros/` are also *source
+# packages*, so ignoring the whole directory would drop code from the repo.
+analytics/analytics.json
+analytics/*.csv
+models/*.task
+models/*.tflite
+gestures/learned.json
+macros/macros.json
+macros/apps.json
+profiles/profiles.json
+
+# Keep the tracked defaults if you prefer to ship them:
+# !macros/macros.json
+# !macros/apps.json
+# !profiles/profiles.json
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
